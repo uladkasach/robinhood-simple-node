@@ -1,11 +1,14 @@
-<h1><img src="https://raw.githubusercontent.com/uladkasach/robinhood-node/master/.github/robinhood-node.png"/></h1>
+<h1><img src="https://raw.githubusercontent.com/uladkasach/robinhood-simple-node/master/.github/robinhood-node.png"/></h1>
 
 
-[![npm](https://img.shields.io/npm/v/robinhood-api-node.svg?style=flat-square)](https://www.npmjs.com/package/robinhood-api-node)
-[![npm](https://img.shields.io/npm/dm/robinhood-api-node.svg)](https://www.npmjs.com/package/robinhood-api-node)
+# A Simple NodeJS Robinhood Api
+
+
+[![npm](https://img.shields.io/npm/v/robinhood-simple.svg?style=flat-square)](https://www.npmjs.com/package/robinhood-simple)
+[![npm](https://img.shields.io/npm/dm/robinhood-simple.svg)](https://www.npmjs.com/package/robinhood-simple)
 
 ## Overview
-NodeJS Framework to make trades with the private [Robinhood](https://www.robinhood.com/) API. Using this API is not encouraged, since it's not officially available and it has been [reverse engineered](https://github.com/sanko/Robinhood). FYI [Robinhood's Terms and Conditions](https://brokerage-static.s3.amazonaws.com/assets/robinhood/legal/Robinhood%20Terms%20and%20Conditions.pdf)
+A simple nodejs module to interact with the private [Robinhood](https://www.robinhood.com/) API. The API has been [reverse engineered](https://github.com/sanko/Robinhood); **no official nodejs api for robinhood exists**. FYI: [Robinhood's Terms and Conditions](https://brokerage-static.s3.amazonaws.com/assets/robinhood/legal/Robinhood%20Terms%20and%20Conditions.pdf).
 
 ## Origin
 This repository is based off of [robinhood-rode by aurbano](https://github.com/aurbano/robinhood-node). It was generated as a new repository rather than a fork because of the massive, backwards-incompatible, changes that were created in order to:
@@ -15,7 +18,48 @@ This repository is based off of [robinhood-rode by aurbano](https://github.com/a
 - make error handling easier
 - make code more readable
 
+most importantly
+- keep it simple
 
+
+
+## Installation
+```bash
+$ npm install robinhood-simple --save
+```
+
+## Authentication
+
+To access most functionality one must use either the `username` and `password` of an active Robinhood account or a `token` from a previously authenticated Robinhood session. For example:
+
+
+```js
+
+var credentials = {
+    username: STRING,
+    password: STRING
+}
+// -- or --
+var credentials = {
+    token: STRING
+}
+
+var Robinhood = require('robinhood-simple');
+var robinhood = new Robinhood(credentials);
+robinhood.promise_authenticated
+    .then((token)=>{
+        console.log("authenticated into Robinhood successfully!");
+        console.log("token : " + token);
+        console.log("account : " + robinhood.account);
+    })
+    .catch((err)=>{
+        console.log("could not authenticate into Robinhood:");
+        console.log(err.message);
+    })
+
+```
+
+After authenticating, you may now interact with the Robinhood API.
 
 
 
@@ -55,45 +99,6 @@ This repository is based off of [robinhood-rode by aurbano](https://github.com/a
 * [Contributors](#contributors)
 
 <!-- toc stop -->
-
-## Installation
-```bash
-$ npm install robinhood-api-node --save
-```
-
-## Authentication
-
-To access most functionality one must use either the `username` and `password` of an active Robinhood account or a `token` from a previously authenticated Robinhood session. For example:
-
-
-```js
-
-var credentials = {
-    username: STRING,
-    password: STRING
-}
-// -- or --
-var credentials = {
-    token: STRING
-}
-
-var logger = require('winston')
-var Robinhood = require('robinhood-api-node');
-var robinhood = new Robinhood(credentials);
-robinhood.promise_authenticated
-    .then((token)=>{
-        console.log("authenticated into Robinhood successfully!");
-        console.log("token : " + token);
-        console.log("account : " + robinhood.account);
-    })
-    .catch((err)=>{
-        console.log("could not authenticate into Robinhood:");
-        console.log(err.message);
-    })
-
-```
-
-After authenticating, you may now interact with the Robinhood API.
 
 
 ## API

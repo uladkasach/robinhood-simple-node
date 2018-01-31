@@ -1,11 +1,11 @@
 {
-  "name": "robinhood-api-node",
-  "version": "2.0.3",
-  "description": "Wrapper for the Robinhood API with Promise support",
+  "name": "robinhood-simple",
+  "version": "2.0.4",
+  "description": "A simple module to interact with the Robinhood API; incl. promise support, readable code, more",
   "main": "src/robinhood.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/uladkasach/robinhood-api-node.git"
+    "url": "https://github.com/uladkasach/robinhood-simple-node.git"
   },
   "keywords": [
     "robinhood",
@@ -17,9 +17,9 @@
   ],
   "author": "UladKasach",
   "bugs": {
-    "url": "https://github.com/uladkasach/robinhood-api-node/issues"
+    "url": "https://github.com/uladkasach/robinhood-simple-node/issues"
   },
-  "homepage": "https://github.com/uladkasach/robinhood-api-node",
+  "homepage": "https://github.com/uladkasach/robinhood-simple-node",
   "dependencies": {
     "request": "^2.83.0",
     "request-promise": "^4.2.2"
