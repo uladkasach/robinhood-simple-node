@@ -120,7 +120,7 @@ Note, these examples assume that the `robinhood` object has already been authent
 
 Uladzimir Kasacheuski ([@uladkasach](https://github.com/uladkasach))
 ------------------
-From [https://github.com/aurbano/robinhood-node](github.com/aurbano/robinhood-node):
+From [github.com/aurbano/robinhood-node](https://github.com/aurbano/robinhood-node):
 * Alejandro U. Alvarez ([@aurbano](https://github.com/aurbano))
 * Jesse Spencer ([@Jspenc72](https://github.com/jspenc72))
 * Justin Keller ([@nodesocket](https://github.com/nodesocket))
