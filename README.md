@@ -1,4 +1,4 @@
-<h1><img src="https://raw.githubusercontent.com/uladkasach/robinhood-api-node/master/.github/robinhood-node.png"/></h1>
+<h1><img src="https://raw.githubusercontent.com/uladkasach/robinhood-node/master/.github/robinhood-node.png"/></h1>
 
 
 [![npm](https://img.shields.io/npm/v/robinhood-api-node.svg?style=flat-square)](https://www.npmjs.com/package/robinhood-api-node)
@@ -17,6 +17,8 @@ This repository is based off of [robinhood-rode by aurbano](https://github.com/a
 
 
 
+
+## Table of Contents
 
 <!-- toc -->
   * [Installation](#installation)
