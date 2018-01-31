@@ -1,6 +1,6 @@
 {
   "name": "robinhood-api-node",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Wrapper for the Robinhood API with Promise support",
   "main": "src/robinhood.js",
   "repository": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/uladkasach/robinhood-api-node",
   "dependencies": {
-    "promise-request": "^2.79.0"
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
   }
 }
