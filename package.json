@@ -1,6 +1,6 @@
 {
   "name": "robinhood-api-node",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Wrapper for the Robinhood API with Promise support",
   "main": "src/robinhood.js",
   "repository": {

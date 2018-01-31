@@ -50,6 +50,7 @@ RobinhoodApi.prototype = { // static object properties and methods
             .then((token)=>{
                 this.headers['Authorization'] = 'Token ' + token;
             })
+        this.promise_header_is_authorized = promise_header; // used to wait untill a request is authorized
 
         // promise to set the `account` object for this account
         var promise_to_set_account = promise_header
@@ -80,11 +81,11 @@ RobinhoodApi.prototype = { // static object properties and methods
     // helper functions
     ////////////////////////////////////////////////////////////
     promise_to_request : function(options, bool_skip_waiting_for_auth){ // appends header and requires json and gzip
-        if(bool_skip_waiting_for_auth !== true){
-            if(typeof this.promise_authorized == "undefined") return new Promise((resolve, reject)=>{throw "unauthorized - robinhood must be authorized (login) to make this request"});
-            var promise_can_run = this.promise_authorized;
-        } else {
+        if(bool_skip_waiting_for_auth === true){
             var promise_can_run = Promise.resolve();
+        } else {
+            if(typeof this.promise_header_is_authorized == "undefined") return new Promise((resolve, reject)=>{throw "unauthorized - robinhood must be authorized (login) to make this request"});
+            var promise_can_run = this.promise_header_is_authorized;
         }
         return promise_can_run  // ensure that calls that need to be authorized before firing are authorized first.
             .then(()=>{
