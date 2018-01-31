@@ -8,12 +8,14 @@
 NodeJS Framework to make trades with the private [Robinhood](https://www.robinhood.com/) API. Using this API is not encouraged, since it's not officially available and it has been [reverse engineered](https://github.com/sanko/Robinhood). FYI [Robinhood's Terms and Conditions](https://brokerage-static.s3.amazonaws.com/assets/robinhood/legal/Robinhood%20Terms%20and%20Conditions.pdf)
 
 ## Origin
-This repository is based off of [robinhood-rode by aurbano](https://github.com/aurbano/robinhood-node). It was generated as a new repository rather than a fork because of the massive changes that were created in order to:
+This repository is based off of [robinhood-rode by aurbano](https://github.com/aurbano/robinhood-node). It was generated as a new repository rather than a fork because of the massive, backwards-incompatible, changes that were created in order to:
 - "promisify" the api
 - support natural object instantiation
 - make errors more understandable
 - make error handling easier
 - make code more readable
+
+
 
 
 
@@ -118,8 +120,9 @@ Note, these examples assume that the `robinhood` object has already been authent
 
 # Contributors
 
-Uladzimir Kasacheuski ([@uladkasach](https://github.com/uladkasach))
-------------------
+
+* Uladzimir Kasacheuski ([@uladkasach](https://github.com/uladkasach))
+
 From [github.com/aurbano/robinhood-node](https://github.com/aurbano/robinhood-node):
 * Alejandro U. Alvarez ([@aurbano](https://github.com/aurbano))
 * Jesse Spencer ([@Jspenc72](https://github.com/jspenc72))
