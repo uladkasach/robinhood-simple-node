@@ -251,7 +251,7 @@ RobinhoodApi.prototype = { // static object properties and methods
             })
     },
     quote_data : function(symbol){
-        symbol = Array.isArray(symbol) ? symbol = symbol.join(',') : symbol; // if symbol is an array, make it a string of symbols
+        if(Array.isArray(symbol)) symbol = symbol.join(','); // if symbol is an array, convert it to comma delimited string
         return this.promise_to_request({
                 method : "GET",
                 uri : this.api_paths.host + this.api_paths.endpoints.quotes,
