@@ -37,11 +37,13 @@ RobinhoodApi.prototype = { // static object properties and methods
     _promise_to_conduct_authentication : function(options){
         // promise to retreive the token for this account - supports both initialization with a token and initialization with username+pass
         if(typeof options.token == "undefined"){
+            if(typeof options.username == "undefined" || typeof options.password == "undefined") throw "either options.username and options.password or options.token must be defined"
             var promise_token = this.login(options.username, options.password)
                 .then((response)=>{
                     return response.token;
                 })
         } else {
+            if(typeof options.token == "undefined") throw "either options.username and options.password or options.token must be defined"
             var promise_token = Promise.resolve(options.token);
         }
 

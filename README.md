@@ -11,14 +11,14 @@
 A simple nodejs module to interact with the private [Robinhood](https://www.robinhood.com/) API. The API has been [reverse engineered](https://github.com/sanko/Robinhood); **no official nodejs api for robinhood exists**. FYI: [Robinhood's Terms and Conditions](https://brokerage-static.s3.amazonaws.com/assets/robinhood/legal/Robinhood%20Terms%20and%20Conditions.pdf).
 
 ## Origin
-This repository is based off of [robinhood-rode by aurbano](https://github.com/aurbano/robinhood-node). It was generated as a new repository rather than a fork because of the massive, backwards-incompatible, changes that were created in order to:
+This repository is based off of [robinhood-node by aurbano](https://github.com/aurbano/robinhood-node). It was generated as a new repository rather than a fork because of the massive, backwards-incompatible, changes that were created in order to:
 - "promisify" the api
 - support natural object instantiation
 - make errors more understandable
 - make error handling easier
 - make code more readable
 
-most importantly
+and most importantly
 - keep it simple
 
 
