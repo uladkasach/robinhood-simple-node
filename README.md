@@ -72,30 +72,29 @@ After authenticating, you may now interact with the Robinhood API.
   * [API](#api)
     * [`accounts()`](#accounts)
     * [`expire_token()`](#expire_token)
-    * [`investment_profile(callback)`](#investment_profilecallback)
-    * [`instruments(symbol, callback)`](#instrumentssymbol-callback)
-    * [`quote_data(stock, callback) // Not authenticated`](#quote-datastock-callback-not-authenticated)
-    * [`user(callback)`](#usercallback)
-    * [`dividends(callback)`](#dividendscallback)
-    * [`orders(options, callback)`](#ordersoptions-callback)
-    * [`positions(callback)`](#positionscallback)
-    * [`nonzero_positions(callback)`](#nonzero_positionscallback)
-    * [`place_buy_order(options, callback)`](#place-buy-orderoptions-callback)
+    * [`investment_profile()`](#investment_profile)
+    * [`instruments(symbol)`](#instrumentssymbol)
+    * [`user()`](#user)
+    * [`dividends()`](#dividends)
+    * [`orders(options)`](#ordersoptions)
+    * [`positions()`](#positions)
+    * [`nonzero_positions()`](#nonzero_positions)
+    * [`place_buy_order(options)`](#place-buy-orderoptions)
       * [`trigger`](#trigger)
       * [`time`](#time)
-    * [`place_sell_order(options, callback)`](#place-sell-orderoptions-callback)
+    * [`place_sell_order(options)`](#place-sell-orderoptions)
       * [`trigger`](#trigger)
       * [`time`](#time)
-    * [`fundamentals(symbol, callback)`](#fundamentalssymbol-callback)
+    * [`fundamentals(symbol)`](#fundamentalssymbol)
       * [Response](#response)
-    * [`cancel_order(order, callback)`](#cancel-orderorder-callback)
-    * [`watchlists(name, callback)`](#watchlistsname-callback)
-    * [`create_watch_list(name, callback)`](#create-watch-listname-callback)
-    * [`sp500_up(callback)`](#sp500-upcallback)
-    * [`sp500_down(callback)`](#sp500-downcallback)
-    * [`splits(instrument, callback)`](#splitsinstrument-callback)
-    * [`historicals(symbol, intv, span, callback)`](#historicalssymbol-intv-span-callback)
-    * [`url(url, callback)`](#urlurl-callback)
+    * [`cancel_order(order)`](#cancel-orderorder)
+    * [`watchlists(name)`](#watchlistsname)
+    * [`create_watch_list(name)`](#create-watch-listname)
+    * [`sp500_up()`](#sp500-up)
+    * [`sp500_down()`](#sp500-down)
+    * [`splits(instrument)`](#splitsinstrument)
+    * [`historicals(symbol, intv, span)`](#historicalssymbol-intv-span)
+    * [`url(url)`](#urlurl)
 * [Contributors](#contributors)
 
 <!-- toc stop -->
@@ -103,7 +102,13 @@ After authenticating, you may now interact with the Robinhood API.
 
 ## API
 
-Note, these examples assume that the `robinhood` object has already been authenticated as demonstrated above.
+Note, these examples assume that the `robinhood` object has already been authenticated as demonstrated above. Note, the robinhood module will automatically wait until authorization has completed before running any subsequent operations. In other words the following usage is supported:
+
+```
+var robinhood = new Robinhood(credentials);
+robinhood.instruments("AAPL")
+    .then((body)=>{/* magic */})
+```
 
 ### `accounts()`
 
@@ -115,11 +120,85 @@ Note, these examples assume that the `robinhood` object has already been authent
 ```
 
 ### `expire_token()`
+`expire_token()` enables a user to log out and terminate the robinhood session, de-authorizing a specific token.
 
 ```js
     robinhood.expire_token()
         .then(()=>{
             console.log("logged out of robinhood and expired the token")
+        })
+```
+
+### `historicals()`
+
+```js
+    var ticker = "AAPL";
+    var interval = "10minute"; // either `10minute` or `5minute`
+    var period = "day"; // either "day" or "week"
+    robinhood.historicals(ticker, interval, period)
+        .then((body)=>{
+            var historicals = body.historicals;
+            console.log(historicals);
+            /*
+            [
+              { begins_at: '2018-01-16T14:30:00Z',
+                open_price: '245.3500',
+                close_price: '245.5400',
+                high_price: '246.0800',
+                low_price: '245.2100',
+                volume: 12701,
+                session: 'reg',
+                interpolated: false },
+              { begins_at: '2018-01-16T14:40:00Z',
+                open_price: '245.6096',
+                close_price: '245.8100',
+                high_price: '245.8400',
+                low_price: '245.2400',
+                volume: 8133,
+                session: 'reg',
+                interpolated: false },
+              { begins_at: '2018-01-16T14:50:00Z',
+                open_price: '245.7502',
+                close_price: '245.9100',
+                high_price: '246.0548',
+                low_price: '245.5861',
+                volume: 4569,
+                session: 'reg',
+                interpolated: false },
+                ...
+            ]
+            */
+        })
+```
+
+### `instruments(symbol)`
+
+`instruments(...)` is used to retreive detailed information about specific instruments (e.g., companies).
+
+```js
+    var ticker_symbol = "AAPL"; // use apple symbol for demo
+    robinhood.instruments(ticker_symbol)
+        .then((body)=>{
+            console.log(body);
+            //    { previous: null,
+            //      results:
+            //       [ { min_tick_size: null,
+            //           splits: 'https://api.robinhood.com/instruments/450dfc6d-5510-4d40-abfb-f633b7d9be3e/splits/',
+            //           margin_initial_ratio: '0.5000',
+            //           url: 'https://api.robinhood.com/instruments/450dfc6d-5510-4d40-abfb-f633b7d9be3e/',
+            //           quote: 'https://api.robinhood.com/quotes/AAPL/',
+            //           symbol: 'AAPL',
+            //           bloomberg_unique: 'EQ0010169500001000',
+            //           list_date: '1990-01-02',
+            //           fundamentals: 'https://api.robinhood.com/fundamentals/AAPL/',
+            //           state: 'active',
+            //           day_trade_ratio: '0.2500',
+            //           tradeable: true,
+            //           maintenance_ratio: '0.2500',
+            //           id: '450dfc6d-5510-4d40-abfb-f633b7d9be3e',
+            //           market: 'https://api.robinhood.com/markets/XNAS/',
+            //           name: 'Apple Inc. - Common Stock' } ],
+            //      next: null }
         })
 ```
 
