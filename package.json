@@ -1,6 +1,6 @@
 {
   "name": "robinhood-simple",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A simple module to interact with the Robinhood API; incl. promise support, readable code, more",
   "main": "src/robinhood.js",
   "repository": {

@@ -35,7 +35,7 @@ RobinhoodApi.prototype = { // static object properties and methods
     */
     promise_to_auth : function(options){ // this ensures that regardless of how many calls to promise_to_auth() are made, we only queue one authorization.
         if(this.promise_authorized == null || typeof this.promise_authorized == "undefined"){ // if not promise_authorized is not defined, define it
-            this.promise_authorized = this.promise_authorization_completed(options)
+            this.promise_authorized = this._promise_to_conduct_authentication(options)
         }
         return this.promise_authorized;
     },
@@ -87,17 +87,6 @@ RobinhoodApi.prototype = { // static object properties and methods
                 return promise_token; // successfuly authorized. return token.
             });
     },
-    /*
-        used internally to ensure that authorization is received before conducting methods which require authorization
-    */
-    promise_authorization_completed : function(){ // utilized to ensure we are authorized before running methods which require authorization
-        if(this.promise_authorized == null || typeof this.promise_authorized == "undefined"){
-
-        } else {
-            return this.promise_authorized;
-        }
-    },
-
 
     ////////////////////////////////////////////////////////////
     // helper functions
