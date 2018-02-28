@@ -106,16 +106,7 @@ RobinhoodApi.prototype = { // static object properties and methods
                 options.json = true;
                 options.gzip = true;
                 options.headers = this.headers;
-                console.log(options);
                 return promise_request(options);
-            })
-            .then((response)=>{
-                console.log("response : ");
-                console.log(response);
-                return response;
-            })
-            .catch((error)=>{
-                console.log(error);
             })
     },
 
