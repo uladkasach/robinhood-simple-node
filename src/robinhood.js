@@ -3,6 +3,8 @@
  */
 
 'use strict';
+const AUTH_ERROR = {type : "auth", details : "robinhood api must be authenticated before this request can be made"}; // error message for authorization not avail
+
 
 // Dependencies
 var promise_request = require('request-promise');
@@ -107,7 +109,7 @@ RobinhoodApi.prototype = { // static object properties and methods
         if(bool_skip_waiting_for_auth === true){
             var promise_can_run = Promise.resolve();
         } else {
-            if(typeof this.promise_header_is_authorized == "undefined") return Promise.reject({type : "auth", details : "robinhood api must be authenticated before this request can be made"});
+            if(typeof this.promise_header_is_authorized == "undefined") return Promise.reject(AUTH_ERROR);
             var promise_can_run = this.promise_header_is_authorized;
         }
         return promise_can_run  // ensure that calls that need to be authorized before firing are authorized first.
@@ -189,7 +191,10 @@ RobinhoodApi.prototype = { // static object properties and methods
                 uri : this.api_paths.host + this.api_paths.endpoints.accounts,
             })
     },
-
+    token : function(){
+        if(typeof this.promise_authorized == "undefined" || this.promise_authorized == null) return Promise.reject(AUTH_ERROR);
+        return this.promise_authorized;
+    },
 
     /* orders managment */
     order : function(order_id){ // retreive one order by id

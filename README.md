@@ -46,16 +46,7 @@ var credentials = {
 
 var Robinhood = require('robinhood-simple');
 var robinhood = new Robinhood(credentials);
-robinhood.promise_authenticated
-    .then((token)=>{
-        console.log("authenticated into Robinhood successfully!");
-        console.log("token : " + token);
-        console.log("account : " + robinhood.account);
-    })
-    .catch((err)=>{
-        console.log("could not authenticate into Robinhood:");
-        console.log(err.message);
-    })
+// robinhood is now ready to use!
 
 ```
 
@@ -102,12 +93,24 @@ After authenticating, you may now interact with the Robinhood API.
 
 ## API
 
-Note, these examples assume that the `robinhood` object has already been authenticated as demonstrated above. Note, the robinhood module will automatically wait until authorization has completed before running any subsequent operations. In other words the following usage is supported:
+These examples assume that the `robinhood` object has already been initialized as demonstrated above. Note, the robinhood module will automatically wait until authorization has completed before running any subsequent requests are made. In other words the following usage is supported:
 
 ```
 var robinhood = new Robinhood(credentials);
 robinhood.instruments("AAPL")
     .then((body)=>{/* magic */})
+```
+
+
+### `token()`
+
+This resolves with the token after the `robinhood` instance is authenticated.
+
+```js
+    robinhood.token()
+        .then((token)=>{
+            console.log(token) // don't share this! whoever has this can access your account.
+        })
 ```
 
 ### `accounts()`
