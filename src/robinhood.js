@@ -106,7 +106,16 @@ RobinhoodApi.prototype = { // static object properties and methods
                 options.json = true;
                 options.gzip = true;
                 options.headers = this.headers;
+                console.log(options);
                 return promise_request(options);
+            })
+            .then((response)=>{
+                console.log("response : ");
+                console.log(response);
+                return response;
+            })
+            .catch((error)=>{
+                console.log(error);
             })
     },
 
@@ -261,10 +270,11 @@ RobinhoodApi.prototype = { // static object properties and methods
             })
     },
     instruments : function(symbol){
+        console.log("requesting instruments for " + symbol);
         return this.promise_to_request({
                 method : "GET",
                 uri : this.api_paths.host + this.api_paths.endpoints.instruments,
-                qs: { 'symbols': symbol },
+                qs: { 'symbol': symbol },
             })
     },
     quote_data : function(symbol){
