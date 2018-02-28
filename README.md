@@ -61,6 +61,7 @@ After authenticating, you may now interact with the Robinhood API.
   * [Installation](#installation)
   * [Authentication](#authentication)
   * [API](#api)
+    * [`token()`](#token)
     * [`accounts()`](#accounts)
     * [`expire_token()`](#expire_token)
     * [`investment_profile()`](#investment_profile)
@@ -95,7 +96,7 @@ After authenticating, you may now interact with the Robinhood API.
 
 These examples assume that the `robinhood` object has already been initialized as demonstrated above. Note, the robinhood module will automatically wait until authorization has completed before running any subsequent requests are made. In other words the following usage is supported:
 
-```
+```js
 var robinhood = new Robinhood(credentials);
 robinhood.instruments("AAPL")
     .then((body)=>{/* magic */})
@@ -107,71 +108,71 @@ robinhood.instruments("AAPL")
 This resolves with the token after the `robinhood` instance is authenticated.
 
 ```js
-    robinhood.token()
-        .then((token)=>{
-            console.log(token) // don't share this! whoever has this can access your account.
-        })
+robinhood.token()
+    .then((token)=>{
+        console.log(token) // don't share this! whoever has this can access your account.
+    })
 ```
 
 ### `accounts()`
 
 ```js
-    robinhood.accounts()
-        .then((body)=>{
-            console.log(body)
-        })
+robinhood.accounts()
+    .then((body)=>{
+        console.log(body)
+    })
 ```
 
 ### `expire_token()`
 `expire_token()` enables a user to log out and terminate the robinhood session, de-authorizing a specific token.
 
 ```js
-    robinhood.expire_token()
-        .then(()=>{
-            console.log("logged out of robinhood and expired the token")
-        })
+robinhood.expire_token()
+    .then(()=>{
+        console.log("logged out of robinhood and expired the token")
+    })
 ```
 
 ### `historicals()`
 
 ```js
-    var ticker = "AAPL";
-    var interval = "10minute"; // either `10minute` or `5minute`
-    var period = "day"; // either "day" or "week"
-    robinhood.historicals(ticker, interval, period)
-        .then((body)=>{
-            var historicals = body.historicals;
-            console.log(historicals);
-            /*
-            [
-              { begins_at: '2018-01-16T14:30:00Z',
-                open_price: '245.3500',
-                close_price: '245.5400',
-                high_price: '246.0800',
-                low_price: '245.2100',
-                volume: 12701,
-                session: 'reg',
-                interpolated: false },
-              { begins_at: '2018-01-16T14:40:00Z',
-                open_price: '245.6096',
-                close_price: '245.8100',
-                high_price: '245.8400',
-                low_price: '245.2400',
-                volume: 8133,
-                session: 'reg',
-                interpolated: false },
-              { begins_at: '2018-01-16T14:50:00Z',
-                open_price: '245.7502',
-                close_price: '245.9100',
-                high_price: '246.0548',
-                low_price: '245.5861',
-                volume: 4569,
-                session: 'reg',
-                interpolated: false },
-                ...
-            ]
-            */
-        })
+var ticker = "AAPL";
+var interval = "10minute"; // either `10minute` or `5minute`
+var period = "day"; // either "day" or "week"
+robinhood.historicals(ticker, interval, period)
+    .then((body)=>{
+        var historicals = body.historicals;
+        console.log(historicals);
+        /*
+        [
+          { begins_at: '2018-01-16T14:30:00Z',
+            open_price: '245.3500',
+            close_price: '245.5400',
+            high_price: '246.0800',
+            low_price: '245.2100',
+            volume: 12701,
+            session: 'reg',
+            interpolated: false },
+          { begins_at: '2018-01-16T14:40:00Z',
+            open_price: '245.6096',
+            close_price: '245.8100',
+            high_price: '245.8400',
+            low_price: '245.2400',
+            volume: 8133,
+            session: 'reg',
+            interpolated: false },
+          { begins_at: '2018-01-16T14:50:00Z',
+            open_price: '245.7502',
+            close_price: '245.9100',
+            high_price: '246.0548',
+            low_price: '245.5861',
+            volume: 4569,
+            session: 'reg',
+            interpolated: false },
+            ...
+        ]
+        */
+    })
 ```
 
 ### `instruments(symbol)`
@@ -179,30 +180,30 @@ This resolves with the token after the `robinhood` instance is authenticated.
 `instruments(...)` is used to retreive detailed information about specific instruments (e.g., companies).
 
 ```js
-    var ticker_symbol = "AAPL"; // use apple symbol for demo
-    robinhood.instruments(ticker_symbol)
-        .then((body)=>{
-            console.log(body);
-            //    { previous: null,
-            //      results:
-            //       [ { min_tick_size: null,
-            //           splits: 'https://api.robinhood.com/instruments/450dfc6d-5510-4d40-abfb-f633b7d9be3e/splits/',
-            //           margin_initial_ratio: '0.5000',
-            //           url: 'https://api.robinhood.com/instruments/450dfc6d-5510-4d40-abfb-f633b7d9be3e/',
-            //           quote: 'https://api.robinhood.com/quotes/AAPL/',
-            //           symbol: 'AAPL',
-            //           bloomberg_unique: 'EQ0010169500001000',
-            //           list_date: '1990-01-02',
-            //           fundamentals: 'https://api.robinhood.com/fundamentals/AAPL/',
-            //           state: 'active',
-            //           day_trade_ratio: '0.2500',
-            //           tradeable: true,
-            //           maintenance_ratio: '0.2500',
-            //           id: '450dfc6d-5510-4d40-abfb-f633b7d9be3e',
-            //           market: 'https://api.robinhood.com/markets/XNAS/',
-            //           name: 'Apple Inc. - Common Stock' } ],
-            //      next: null }
-        })
+var ticker_symbol = "AAPL"; // use apple symbol for demo
+robinhood.instruments(ticker_symbol)
+    .then((body)=>{
+        console.log(body);
+        //    { previous: null,
+        //      results:
+        //       [ { min_tick_size: null,
+        //           splits: 'https://api.robinhood.com/instruments/450dfc6d-5510-4d40-abfb-f633b7d9be3e/splits/',
+        //           margin_initial_ratio: '0.5000',
+        //           url: 'https://api.robinhood.com/instruments/450dfc6d-5510-4d40-abfb-f633b7d9be3e/',
+        //           quote: 'https://api.robinhood.com/quotes/AAPL/',
+        //           symbol: 'AAPL',
+        //           bloomberg_unique: 'EQ0010169500001000',
+        //           list_date: '1990-01-02',
+        //           fundamentals: 'https://api.robinhood.com/fundamentals/AAPL/',
+        //           state: 'active',
+        //           day_trade_ratio: '0.2500',
+        //           tradeable: true,
+        //           maintenance_ratio: '0.2500',
+        //           id: '450dfc6d-5510-4d40-abfb-f633b7d9be3e',
+        //           market: 'https://api.robinhood.com/markets/XNAS/',
+        //           name: 'Apple Inc. - Common Stock' } ],
+        //      next: null }
+    })
 ```
 
 # Contributors
