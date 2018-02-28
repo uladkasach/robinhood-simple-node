@@ -27,13 +27,21 @@ RobinhoodApi.prototype = { // static object properties and methods
     ////////////////////////////////////////////////////////////
     // Initialization
     ////////////////////////////////////////////////////////////
+    /*
+        begin authorization of this instance
+            - only requests authorization once and caches the promise
+    */
     promise_to_auth : function(options){ // this ensures that regardless of how many calls to promise_to_auth() are made, we only queue one authorization.
         if(this.promise_authorized == null || typeof this.promise_authorized == "undefined"){ // if not promise_authorized is not defined, define it
-            this.promise_authorized = this._promise_to_conduct_authentication(options)
-        } else {
-            return this.promise_authorized;
+            this.promise_authorized = this.promise_authorization_completed(options)
         }
+        return this.promise_authorized;
     },
+    /*
+        "private" method - should not be used directly.
+        functionality required to authorize this instance
+        returns token
+    */
     _promise_to_conduct_authentication : function(options){
         // promise to retreive the token for this account - supports both initialization with a token and initialization with username+pass
         if(typeof options.token == "undefined"){
@@ -77,16 +85,29 @@ RobinhoodApi.prototype = { // static object properties and methods
                 return promise_token; // successfuly authorized. return token.
             });
     },
+    /*
+        used internally to ensure that authorization is received before conducting methods which require authorization
+    */
+    promise_authorization_completed : function(){ // utilized to ensure we are authorized before running methods which require authorization
+        if(this.promise_authorized == null || typeof this.promise_authorized == "undefined"){
+
+        } else {
+            return this.promise_authorized;
+        }
+    },
 
 
     ////////////////////////////////////////////////////////////
     // helper functions
     ////////////////////////////////////////////////////////////
+    /*
+        ensures that authorization has completed before making requests
+    */
     promise_to_request : function(options, bool_skip_waiting_for_auth){ // appends header and requires json and gzip
         if(bool_skip_waiting_for_auth === true){
             var promise_can_run = Promise.resolve();
         } else {
-            if(typeof this.promise_header_is_authorized == "undefined") return new Promise((resolve, reject)=>{throw "unauthorized - robinhood must be authorized (login) to make this request"});
+            if(typeof this.promise_header_is_authorized == "undefined") return Promise.reject({type : "auth", details : "robinhood api must be authenticated before this request can be made"});
             var promise_can_run = this.promise_header_is_authorized;
         }
         return promise_can_run  // ensure that calls that need to be authorized before firing are authorized first.
