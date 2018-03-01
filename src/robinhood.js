@@ -261,7 +261,6 @@ RobinhoodApi.prototype = { // static object properties and methods
             })
     },
     instruments : function(symbol){
-        console.log("requesting instruments for " + symbol);
         return this.promise_to_request({
                 method : "GET",
                 uri : this.api_paths.host + this.api_paths.endpoints.instruments,
